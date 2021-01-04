@@ -1,0 +1,23 @@
+﻿@model BaseViewModel;
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Сервис для получения растояния от списка аддресов до определенного аддреса </h1>
+    @using (Html.BeginForm("GetNearestAddressesByAddress", "Home", FormMethod.Post))
+    {
+        <span>Введите список адрессов:</span>
+        @Html.TextAreaFor(model => model.Addresses);
+        <br/>
+        <span>Введите аддресс для которого необходимо посчитать растояние:</span>
+        @Html.TextBoxFor(model => model.Address);
+        <br/>
+        <span>Результат:</span> 
+        @Html.TextAreaFor(model => model.Results);
+        <br/>
+        
+        <button class="btn btn-primary">Найти</button>
+    }
+</div>
