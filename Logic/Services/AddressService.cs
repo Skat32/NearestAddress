@@ -12,17 +12,22 @@ namespace Logic.Services
     public class AddressService : IAddressService
     {
         private readonly IHttpClientProxy _httpClientProxy;
+        private readonly ILoggerService _loggerService;
         private readonly Uri _uri;
         
-        public AddressService(IHttpClientProxy httpClientProxy, AddressFinderOptions finderOptions)
+        public AddressService(IHttpClientProxy httpClientProxy, AddressFinderOptions finderOptions, ILoggerService loggerService)
         {
             _httpClientProxy = httpClientProxy;
+            _loggerService = loggerService;
             _uri = finderOptions.Uri;
         }
 
         public async Task<KeyValuePair<string, (double lat, double lon)>> GetPositionByAddressAsync(string address)
         {
             var result = await _httpClientProxy.GetAsync<SputnikPositionByAddressResponse>(_uri + address);
+
+            if (!result.Result.Any())
+                return new KeyValuePair<string, (double lat, double lon)>(address, (0, 0));
 
             return new KeyValuePair<string, (double lat, double lon)>(address, 
                 (result.Result.First().Position.Lat, result.Result.First().Position.Lon));
@@ -34,18 +39,35 @@ namespace Logic.Services
 
             var positions = new Dictionary<string, double>();
 
-            foreach (var s in address.Distinct())
+            foreach (var s in address.Distinct().Where(x => x != forAddress))
             {
-                var (key, (lat, lon)) = await GetPositionByAddressAsync(s);
+                try
+                {
+                    var (key, (lat, lon)) = await GetPositionByAddressAsync(s);
 
-                var distance = Distance(lat1, lon1, lat,
-                    lon);
-                
-                positions.Add(key, distance);
+                    if (lat == 0 && lon == 0)
+                    {
+                        positions.Add(key, 0);
+                        _loggerService.Warning($"Некорректно задан адрес: {s}");
+                        continue;
+                    }
+                    
+                    var distance = Distance(lat1, lon1, lat,
+                        lon);
+                    
+                    positions.Add(key, distance);
+                }
+                catch(Exception e)
+                {
+                    _loggerService.Error(e, $"Непредвиденная ошибка для адреса: {s}");
+                    // ignore
+                }
             }
             
             return positions.OrderBy(pair => pair.Value).ToDictionary(pair => pair.Key,
-                pair => $"{(pair.Value < 1000 ? pair.Value : pair.Value / 1000):F} {(pair.Value < 1000 ? "м." : "км.")}");
+                pair => pair.Value == 0 
+                    ? "Некорректно задан адрес" 
+                    : $"{(pair.Value < 1000 ? pair.Value : pair.Value / 1000):F} {(pair.Value < 1000 ? "м." : "км.")}");
         }
 
         /// <summary>

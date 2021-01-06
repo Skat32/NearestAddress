@@ -26,7 +26,7 @@ namespace WebApplication.Controllers
 
         public async Task<IActionResult> GetNearestAddressesByAddressAsync(BaseViewModel request)
         {
-            if (request.Addresses is null || request.Address is null)
+            if (request?.Addresses is null || request.Address is null)
                 return View("Error");
 
             var addresses = request.Addresses.Split('\n').Select(x => x.Trim()).Take(100).ToArray(); // исскуственное ограничение на 100 записей максимум
