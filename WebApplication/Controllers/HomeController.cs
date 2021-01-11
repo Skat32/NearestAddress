@@ -24,7 +24,7 @@ namespace WebApplication.Controllers
             return View();
         }
 
-        public async Task<IActionResult> GetNearestAddressesByAddressAsync(BaseViewModel request)
+        public async Task<IActionResult> Result(BaseViewModel request)
         {
             if (request?.Addresses is null || request.Address is null)
                 return View("Error");
@@ -35,12 +35,7 @@ namespace WebApplication.Controllers
             
             var result = await _addressService.GetNearestAddressByAddressAsync(addresses, request.Address);
 
-            return View("Index", new BaseViewModel {Results = string.Join('\n', result.Select(x => $"{x.Key} - {x.Value}"))});
-        }
-        
-        public IActionResult Privacy()
-        {
-            return View();
+            return View(new BaseViewModel {Results = string.Join('\n', result.Select(x => $"{x.Key} - {x.Value}"))});
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

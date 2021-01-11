@@ -24,7 +24,7 @@ namespace WebApplication.Controllers
         [HttpPost("GetNearestAddressByAddress")]
         public async Task<IDictionary<string, string>> GetNearestAddressesByAddressAsync(GetNearestAddressByAddressRequest request)
         {
-            if (request.Addresses is null || request.ForAddress is null)
+            if (request.Addresses is null || request.ForAddress is null || string.IsNullOrEmpty(request.ForAddress.Trim()))
                 return new Dictionary<string, string>();
 
             request.Addresses = request.Addresses.Take(100).ToArray(); // исскуственное ограничение на 100 записей максимум

@@ -1,0 +1,22 @@
+@model BaseViewModel;
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    .gavno{
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+    }
+</style>
+
+<div class="text-center">
+    <h1 class="display-4"> Расстояние от адресов до адреса </h1>
+    <div>
+        <p>Результат:</p>
+        @Html.TextAreaFor(model => model.Results, new {@class = "form-control gavno"})
+        <br/>
+    </div>
+</div>
