@@ -5,17 +5,17 @@
 }
 
 <style>
-      .gavno{
+      .textArea-two{
         width: 100%;
         height: auto;
         min-height: 100px;
         }
         
-     .gavno2{
+     .textBox-one{
         width: 500px;
         }
         
-     .gavno3{
+     .div-forAddress{
         display: flex;
         align-items: center;
         flex-direction: column;
@@ -26,14 +26,14 @@
     <h1 class="display-4"> Расстояние от адресов до адреса </h1>
     @using (Html.BeginForm("Result", "Home", FormMethod.Post))
     {
-        <div class="gavno3">
+        <div class="div-forAddress">
             <p>Введите список адресов:</p>
-            @Html.TextAreaFor(model => model.Addresses, new {@class = "form-control gavno"})
+            @Html.TextAreaFor(model => model.Addresses, new {@class = "form-control textArea-two"})
             <br/>
         </div>
-        <div class="gavno3">
+        <div class="div-forAddress">
             <p>Введите адрес для которого необходимо посчитать растояние:</p>
-            @Html.TextBoxFor(model => model.Address, new {@class = "form-control gavno2"})
+            @Html.TextBoxFor(model => model.Address, new {@class = "form-control textBox-one"})
         </div>
         <br/>
         

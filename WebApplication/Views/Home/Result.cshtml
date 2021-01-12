@@ -5,7 +5,7 @@
 }
 
 <style>
-    .gavno{
+    .TextArea-forResult{
     width: 100%;
     height: auto;
     min-height: 100px;
@@ -16,7 +16,7 @@
     <h1 class="display-4"> Расстояние от адресов до адреса </h1>
     <div>
         <p>Результат:</p>
-        @Html.TextAreaFor(model => model.Results, new {@class = "form-control gavno"})
+        @Html.TextAreaFor(model => model.Results, new {@class = "form-control TextArea-forResult"})
         <br/>
     </div>
 </div>
