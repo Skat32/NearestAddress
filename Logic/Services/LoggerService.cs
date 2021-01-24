@@ -17,6 +17,11 @@ namespace Logic.Services
             Logger.Error(ex, $"\n<Method: {methodName} Class: {GetClassNameByPathToFile(classPath)}>\nDevMessage: <{message}>\n", valueForLog);
         }
 
+        public void Error(string message = null, string methodName = "", string classPath = "", object valueForLog = null)
+        {
+            Logger.Error($"\n<Method: {methodName} Class: {GetClassNameByPathToFile(classPath)}>\nDevMessage: <{message}>\n", valueForLog);
+        }
+
         public void Warning(string message, [CallerMemberName]string methodName = "", [CallerFilePath]string classPath = "", object valueForLog = null)
         {
             Logger.Warn($"\n<Method: {methodName} Class: {GetClassNameByPathToFile(classPath)}>\nDevMessage: <{message}>\n", valueForLog);
