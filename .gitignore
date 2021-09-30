@@ -6,3 +6,6 @@ riderModule.iml
 .idea
 WebApplication/internal-nlog.txt
 WebApplication/.DS_Store
+WebApplication/published
+publish
+.DS_Store

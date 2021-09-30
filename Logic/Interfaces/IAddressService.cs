@@ -13,7 +13,7 @@ namespace Logic.Interfaces
         Task<KeyValuePair<string, (double lat, double lon)>> GetPositionByAddressAsync(string address);
 
         /// <summary>
-        /// Получаем отсортированный список по ближайшему значению адрессов для выбранно адреса
+        /// Получение отсортированного списка по ближайшему значению адрессов для выбранно адреса
         /// </summary>
         /// <param name="address"> список адрессов, которые необходимо проверить </param>
         /// <param name="forAddress"> ближайший аддресс </param>

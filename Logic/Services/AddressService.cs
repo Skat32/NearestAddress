@@ -71,7 +71,7 @@ namespace Logic.Services
         }
 
         /// <summary>
-        /// Получаем дистанцию от одной до другой координаты в метрах
+        /// Получение дистанции от одной до другой координаты в метрах
         /// </summary>
         /// <param name="lat1"></param>
         /// <param name="lon1"></param>
